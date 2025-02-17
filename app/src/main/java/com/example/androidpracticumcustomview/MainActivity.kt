@@ -1,11 +1,9 @@
 package com.example.androidpracticumcustomview
 
+import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.widget.TextView
+import android.widget.Button
 import androidx.activity.ComponentActivity
-import com.example.androidpracticumcustomview.ui.theme.CustomContainer
 
 /*
 Задание:
@@ -15,31 +13,17 @@ import com.example.androidpracticumcustomview.ui.theme.CustomContainer
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        /*
-        Раскомментируйте нужный вариант
-         */
-        startXmlPracticum() // «традиционный» android (XML)
-//          setContent { // Jetpack Compose
-//             MainScreen()
-    }
+        setContentView(R.layout.activity_main)
 
-    private fun startXmlPracticum() {
-        val customContainer = CustomContainer(this)
-        setContentView(customContainer)
+        val composeButton = findViewById<Button>(R.id.compose_button)
+        val traditionalButton = findViewById<Button>(R.id.traditional_button)
 
-        val firstView = TextView(this).apply {
-            // TODO
-            // ...
+        composeButton.setOnClickListener {
+            startActivity(Intent(this, ComposeActivity::class.java))
         }
 
-        val secondView = TextView(this).apply {
-            // TODO
-            // ...
+        traditionalButton.setOnClickListener {
+            startActivity(Intent(this, TraditionalActivity::class.java))
         }
-
-        // Добавление второго элемента через некоторое время
-        Handler(Looper.getMainLooper()).postDelayed({
-            customContainer.addView(secondView)
-        }, 2000)
     }
 }
