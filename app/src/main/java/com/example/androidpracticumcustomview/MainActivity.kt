@@ -1,14 +1,9 @@
 package com.example.androidpracticumcustomview
 
-import android.graphics.Color
+import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.widget.TextView
+import android.widget.Button
 import androidx.activity.ComponentActivity
-import com.example.androidpracticumcustomview.ui.theme.CustomContainer
 
 /*
 Задание:
@@ -18,38 +13,17 @@ import com.example.androidpracticumcustomview.ui.theme.CustomContainer
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        /*
-        Раскомментируйте нужный вариант
-         */
-        startXmlPracticum() // «традиционный» android (XML)
-//          setContent { // Jetpack Compose
-//             MainScreen()
-    }
+        setContentView(R.layout.activity_main)
 
-    private fun startXmlPracticum() {
-        val customContainer = CustomContainer(this).apply {
-            layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
+        val composeButton = findViewById<Button>(R.id.compose_button)
+        val traditionalButton = findViewById<Button>(R.id.traditional_button)
+
+        composeButton.setOnClickListener {
+            startActivity(Intent(this, ComposeActivity::class.java))
         }
 
-        setContentView(customContainer)
-
-        val firstView = TextView(this).apply {
-            text = "Top Element"
-            setBackgroundColor(Color.RED)
-            layoutParams = ViewGroup.LayoutParams(200, 200)
+        traditionalButton.setOnClickListener {
+            startActivity(Intent(this, TraditionalActivity::class.java))
         }
-
-        val secondView = TextView(this).apply {
-            text = "Bottom Element"
-            setBackgroundColor(Color.GREEN)
-            layoutParams = ViewGroup.LayoutParams(200, 200)
-        }
-
-        customContainer.addView(firstView)
-
-        // Добавление второго элемента через некоторое время
-        Handler(Looper.getMainLooper()).postDelayed({
-            customContainer.addView(secondView)
-        }, 2000)
     }
 }
